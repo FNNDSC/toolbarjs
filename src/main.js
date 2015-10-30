@@ -17,8 +17,17 @@ require.config({
 require(['toolbarjs'], function(toolbar) {
   // Entry point
 
+  // toolbar options object
+  var options = {
+    contId: 'toolbarcontainer',
+    position: {
+      top: '5px',
+      right: 0
+    }
+  };
+
   // Create a toolbar.
-  var toolBar = new toolbar.ToolBar('toolbarcontainer');
+  var toolBar = new toolbar.ToolBar(options);
   toolBar.init();
 
   var idInpt = document.getElementById('id');

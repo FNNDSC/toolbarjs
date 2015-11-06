@@ -7,13 +7,21 @@ define(['toolbarjs'], function(toolbarjs) {
 
   describe('toolbarjs', function() {
     var toolBar;
+    // toolbar options object
+    var options = {
+      contId: 'toolbarcontainer',
+      position: {
+        top: '5px',
+        right: 0
+      }
+    };
 
     // Append container div
     $(document.body).append('<div id="toolbarcontainer"></div>');
 
 
     beforeEach(function() {
-      toolBar = new toolbarjs.ToolBar('toolbarcontainer');
+      toolBar = new toolbarjs.ToolBar(options);
       toolBar.init();
     });
 

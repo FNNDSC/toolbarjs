@@ -10,8 +10,9 @@ div.view-toolbar{
   margin: 0;
   height: 30px;
   width: 100%;
+  overflow: auto;
   text-align:center;
-  background-color: black;
+  /*background-color: black;*/
 }
 /*================================================= tool bar button ================================================== */
 .view-toolbar-button{
@@ -22,6 +23,6 @@ div.view-toolbar{
   padding: 1px 2px;
   overflow: hidden;
   background-color: #DDE8BB;
-  color: black;
+  color: #633A05;
   font-size: small;
 }

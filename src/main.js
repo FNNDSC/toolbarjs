@@ -19,7 +19,7 @@ require(['toolbarjs'], function(toolbar) {
 
   // toolbar options object
   var options = {
-    contId: 'toolbarcontainer',
+    container: 'toolbarcontainer',
     position: {
       top: '5px',
       right: 0

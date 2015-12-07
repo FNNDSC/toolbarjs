@@ -9,7 +9,7 @@ define(['toolbarjs'], function(toolbarjs) {
     var toolBar;
     // toolbar options object
     var options = {
-      contId: 'toolbarcontainer',
+      container: 'toolbarcontainer',
       position: {
         top: '5px',
         right: 0

@@ -24,5 +24,7 @@ div.view-toolbar{
   overflow: hidden;
   background-color: #DDE8BB;
   color: #633A05;
+}
+.view-toolbar button{
   font-size: 18px;
 }

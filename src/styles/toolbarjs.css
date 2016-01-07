@@ -12,7 +12,6 @@ div.view-toolbar{
   width: 100%;
   overflow: auto;
   text-align:center;
-  /*background-color: black;*/
 }
 /*================================================= tool bar button ================================================== */
 .view-toolbar-button{
@@ -22,8 +21,13 @@ div.view-toolbar{
   width: 140px;
   padding: 1px 2px;
   overflow: hidden;
-  background-color: #DDE8BB;
-  color: #633A05;
+  border: 1px solid #F9F9F9;
+  display: inline-block;
+  font-size: 18px;
+  background-color: #607D8B;
+  color: #F9F9F9;
+  font-family: 'Droid Sans', sans-serif;
+  border: 1px solid #F9F9F9;
 }
 .view-toolbar button{
   font-size: 18px;

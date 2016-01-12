@@ -31,7 +31,7 @@ div.view-toolbar{
 }
 
 .view-toolbar-button:hover{
-  font-weight: bolder;
+  font-weight: bolder!important;
   background-color: #40C4FF;
 }
 

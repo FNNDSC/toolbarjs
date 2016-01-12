@@ -29,6 +29,12 @@ div.view-toolbar{
   font-family: 'Droid Sans', sans-serif;
   border: 1px solid #F9F9F9;
 }
+
+.view-toolbar-button:hover{
+  background-color: #0091EA;
+}
+
 .view-toolbar button{
   font-size: 24px;
 }
+

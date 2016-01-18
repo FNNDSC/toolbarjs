@@ -30,6 +30,11 @@ div.view-toolbar{
   border: 1px solid #F9F9F9;
 }
 
+button.view-toolbar-button.disabled, button.view-toolbar-button.disabled:hover{
+  background-color: #37474F;
+  border: 1px solid #BDBDBD;
+}
+
 .view-toolbar-button:hover{
   border:2px solid #F9F9F9;
   background-color: #40C4FF;
@@ -43,3 +48,8 @@ div.view-toolbar{
   font-size: 24px;
 }
 
+.label{
+  color: #F9F9F9;
+  margin-left:50px;
+  padding:10px;
+}

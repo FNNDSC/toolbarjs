@@ -109,6 +109,10 @@ define(['jquery_ui'], function() {
      */
      toolbarjs.ToolBar.prototype.addButton = function(btnProps) {
 
+      if('label' in btnProps){
+        this.container.append('<span class="label">' + btnProps.label + '</span>');
+      }
+
        // append a new button to the tool bar
        this.container.append(
          '<button id="' + btnProps.id + '" class="view-toolbar-button" type="button" title="' +
@@ -133,7 +137,12 @@ define(['jquery_ui'], function() {
        if (btnId  && (btnId in this.eventHandlers) && handler) {
          this.eventHandlers[btnId].onclick = handler;
 
-         $('#' + btnId).click(handler);
+         $('#' + btnId).click(
+          function(){
+            if(!$('#' + btnId).hasClass('disabled')){
+              handler();
+            }
+          });
        }
      };
 
@@ -155,6 +164,26 @@ define(['jquery_ui'], function() {
      toolbarjs.ToolBar.prototype.showButton = function(btnId) {
 
        $('#' + btnId).css({display: '' });
+     };
+
+     /**
+     * Disable a toolbar button.
+     *
+     * @param {String} HTML DOM identifier of the button.
+     */
+     toolbarjs.ToolBar.prototype.disableButton = function(btnId) {
+
+       $('#' + btnId).addClass('disabled');
+     };
+
+     /**
+     * Disable a toolbar button.
+     *
+     * @param {String} HTML DOM identifier of the button.
+     */
+     toolbarjs.ToolBar.prototype.enableButton = function(btnId) {
+
+       $('#' + btnId).removeClass('disabled');
      };
 
     /**

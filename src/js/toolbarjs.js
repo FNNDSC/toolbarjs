@@ -43,8 +43,10 @@ define(['jquery_ui'], function() {
         this.position = {};
       }
 
-      // associative array of button event handlers
-      this.eventHandlers = null;
+      // associative array of button objects with the following properties:
+      //  -button: jquery object for the button element
+      //  -label: jquery object for a label element associated with the button
+      this.buttons = null;
     };
 
     /**
@@ -55,8 +57,8 @@ define(['jquery_ui'], function() {
        // add the appropriate classes
        this.container.addClass("view-toolbar");
 
-       // initialize array of button event handlers
-       this.eventHandlers = {};
+       // initialize array of buttons
+       this.buttons = {};
 
        this.setPosition(this.position);
      };
@@ -105,23 +107,31 @@ define(['jquery_ui'], function() {
     /**
      * Add a new button to the tool bar.
      *
-     * @param {Object} object containing button's properties: id (HTML id), title, caption, onclick
+     * @param {Object} object containing button's properties: id string (required), title,
+     * caption, onclick, label.
      */
      toolbarjs.ToolBar.prototype.addButton = function(btnProps) {
 
-      if('label' in btnProps){
-        this.container.append('<span class="label">' + btnProps.label + '</span>');
-      }
+       var btnObj = {};
 
-       // append a new button to the tool bar
-       this.container.append(
-         '<button id="' + btnProps.id + '" class="view-toolbar-button" type="button" title="' +
-          btnProps.title + '">' + btnProps.caption + '</button>'
-       );
+       this.buttons[btnProps.id] = btnObj;
 
-       this.eventHandlers[btnProps.id] = {};
+       if('label' in btnProps) {
+
+        // append the button's label to the toolbar's DOM
+         btnObj.label = $('<span class="label">' + btnProps.label + '</span>');
+         this.container.append(btnObj.label);
+       }
+
+       btnObj.button = $('<button class="view-toolbar-button" type="button" title="' +
+        btnProps.title + '">' + btnProps.caption + '</button>');
+
+       // append the new button to the toolbar's DOM
+       this.container.append(btnObj.button);
+
        // set a click event handler if provided
        if (btnProps.onclick) {
+
          this.setButtonClickHandler(btnProps.id, btnProps.onclick);
        }
      };
@@ -133,17 +143,18 @@ define(['jquery_ui'], function() {
      * @param {Function} event handler.
      */
      toolbarjs.ToolBar.prototype.setButtonClickHandler = function(btnId, handler) {
+       var self = this;
 
-       if (btnId  && (btnId in this.eventHandlers) && handler) {
-         this.eventHandlers[btnId].onclick = handler;
+       if (btnId  && (btnId in self.buttons) && handler) {
 
-         $('#' + btnId).click(
-          function(){
-            if(!$('#' + btnId).hasClass('disabled')){
+         self.buttons[btnId].button.click( function() {
+
+            if(!$(this).hasClass('disabled')) {
+
               handler();
             }
           });
-       }
+        }
      };
 
     /**
@@ -153,7 +164,7 @@ define(['jquery_ui'], function() {
      */
      toolbarjs.ToolBar.prototype.hideButton = function(btnId) {
 
-       $('#' + btnId).css({display: 'none' });
+       this.buttons[btnId].button.css({display: 'none' });
      };
 
     /**
@@ -163,7 +174,7 @@ define(['jquery_ui'], function() {
      */
      toolbarjs.ToolBar.prototype.showButton = function(btnId) {
 
-       $('#' + btnId).css({display: '' });
+       this.buttons[btnId].button.css({display: '' });
      };
 
      /**
@@ -173,7 +184,7 @@ define(['jquery_ui'], function() {
      */
      toolbarjs.ToolBar.prototype.disableButton = function(btnId) {
 
-       $('#' + btnId).addClass('disabled');
+       this.buttons[btnId].button.addClass('disabled');
      };
 
      /**
@@ -183,7 +194,7 @@ define(['jquery_ui'], function() {
      */
      toolbarjs.ToolBar.prototype.enableButton = function(btnId) {
 
-       $('#' + btnId).removeClass('disabled');
+       this.buttons[btnId].button.removeClass('disabled');
      };
 
     /**
@@ -191,7 +202,7 @@ define(['jquery_ui'], function() {
      */
      toolbarjs.ToolBar.prototype.destroy = function() {
 
-       this.eventHandlers = null;
+       this.buttons = null;
        this.container.empty();
        this.container = null;
      };

@@ -32,7 +32,7 @@ define(['toolbarjs'], function(toolbarjs) {
     it('toolbarjs.ToolBar.prototype.addButton({id: newId, caption: "New"}) should add button with caption "New"',
       function () {
         toolBar.addButton({id: 'newId', caption: 'New'});
-        expect(document.getElementById('newId').innerHTML).toEqual('New');
+        expect(toolBar.getButton('newId').button[0].innerHTML).toEqual('New');
       }
     );
 

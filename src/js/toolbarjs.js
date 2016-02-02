@@ -145,56 +145,98 @@ define(['jquery_ui'], function() {
      toolbarjs.ToolBar.prototype.setButtonClickHandler = function(btnId, handler) {
        var self = this;
 
-       if (btnId  && (btnId in self.buttons) && handler) {
+       if (btnId && handler) {
 
-         self.buttons[btnId].button.click( function() {
+         var btn = self.getButton(btnId);
 
-            if(!$(this).hasClass('disabled')) {
+         if(btn) {
 
-              handler();
-            }
-          });
-        }
+           btn.button.click( function() {
+
+             if(!$(this).hasClass('disabled')) {
+
+               handler();
+             }
+           });
+         }
+       }
      };
+
+
+   /**
+    * Get a button's object.
+    *
+    * @param {String} button's identifier.
+    * @return {Object} button object or null.
+    */
+    toolbarjs.ToolBar.prototype.getButton = function(btnId) {
+
+      if (btnId in this.buttons) {
+
+        return this.buttons[btnId];
+      }
+
+      return null;
+    };
 
     /**
      * Hide a toolbar button.
      *
-     * @param {String} HTML DOM identifier of the button.
+     * @param {String}  button's identifier.
      */
      toolbarjs.ToolBar.prototype.hideButton = function(btnId) {
 
-       this.buttons[btnId].button.css({display: 'none' });
+       var btn = this.getButton(btnId);
+
+       if (btn) {
+
+         btn.button.css({display: 'none' });
+       }
      };
 
     /**
      * Show a toolbar button.
      *
-     * @param {String} HTML DOM identifier of the button.
+     * @param {String} button's identifier.
      */
      toolbarjs.ToolBar.prototype.showButton = function(btnId) {
 
-       this.buttons[btnId].button.css({display: '' });
+       var btn = this.getButton(btnId);
+
+       if (btn) {
+
+         btn.button.css({display: '' });
+       }
      };
 
      /**
      * Disable a toolbar button.
      *
-     * @param {String} HTML DOM identifier of the button.
+     * @param {String} button's identifier.
      */
      toolbarjs.ToolBar.prototype.disableButton = function(btnId) {
 
-       this.buttons[btnId].button.addClass('disabled');
+       var btn = this.getButton(btnId);
+
+       if (btn) {
+
+         btn.button.addClass('disabled');
+       }
      };
 
      /**
-     * Disable a toolbar button.
+     * Enable a toolbar button.
      *
-     * @param {String} HTML DOM identifier of the button.
+     * @param {String} button's identifier.
      */
      toolbarjs.ToolBar.prototype.enableButton = function(btnId) {
 
-       this.buttons[btnId].button.removeClass('disabled');
+       var btn = this.getButton(btnId);
+
+       if (btn) {
+
+         btn.button.removeClass('disabled');
+       }
      };
 
     /**

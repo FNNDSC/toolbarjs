@@ -155,7 +155,7 @@ define(['jquery_ui'], function() {
 
              if(!$(this).hasClass('disabled')) {
 
-               handler();
+               handler.apply(this);
              }
            });
          }

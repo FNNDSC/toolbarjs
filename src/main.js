@@ -43,8 +43,10 @@ require(['toolbarjs'], function(toolbar) {
       id: idInpt.value,
       title: titleInpt.value,
       caption: captionInpt.value,
+
       onclick: function() {
-        console.log('Button ' + captionInpt.value + ' clicked!');
+        
+        console.log('Button ' + this.innerHTML + ' clicked!');
       }
     })
   }

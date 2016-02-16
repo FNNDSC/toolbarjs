@@ -3,7 +3,7 @@
  *
  */
 
-define(['toolbarjs'], function(toolbarjs) {
+define(['toolbarjsPackage', 'jquery'], function(toolbarjs, $) {
 
   describe('toolbarjs', function() {
     var toolBar;
@@ -19,7 +19,6 @@ define(['toolbarjs'], function(toolbarjs) {
     // Append container div
     $(document.body).append('<div id="toolbarcontainer"></div>');
 
-
     beforeEach(function() {
       toolBar = new toolbarjs.ToolBar(options);
       toolBar.init();
@@ -30,7 +29,7 @@ define(['toolbarjs'], function(toolbarjs) {
     });
 
     it('toolbarjs.ToolBar.prototype.addButton({id: newId, caption: "New"}) should add button with caption "New"',
-      function () {
+      function() {
         toolBar.addButton({id: 'newId', caption: 'New'});
         expect(toolBar.getButton('newId').button[0].innerHTML).toEqual('New');
       }

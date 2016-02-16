@@ -1,10 +1,8 @@
 /**
  * This module implements a tool bar
  */
-var configuration = [];
-
 // define a new module
-define(configuration, function() {
+define([], function() {
 
   /**
    * Provide a namespace for the tool bar module

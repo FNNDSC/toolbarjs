@@ -2,72 +2,78 @@
  * This module implements a tool bar
  */
 // define a new module
-define([], function() {
+define(
+  [
 
-  /**
-   * Provide a namespace for the tool bar module
-   *
-   * @namespace
-   */
-  var toolbarjs = toolbarjs || {};
+  // jquery is special because it is AMD but doesn't return an object
+  'jquery_ui'
 
-  /**
-   * Class implementing the tool bar
-   *
-   * @constructor
-   * @param {Object} toolbar's options with properties:
-   *   -container: toolbar's container's DOM id or DOM object
-   *   -position: toolbar's css position object with possible properties top, bottom, left, right
-   */
-  toolbarjs.ToolBar = function(options) {
+  ], function() {
 
-    this.version = 0.0;
+    /**
+     * Provide a namespace for the tool bar module
+     *
+     * @namespace
+     */
+    var toolbarjs = toolbarjs || {};
 
-    // toolbar's container
-    if (typeof options.container === 'string') {
+    /**
+     * Class implementing the tool bar
+     *
+     * @constructor
+     * @param {Object} toolbar's options with properties:
+     *   -container: toolbar's container's DOM id or DOM object
+     *   -position: toolbar's css position object with possible properties top, bottom, left, right
+     */
+    toolbarjs.ToolBar = function(options) {
 
-      // a DOM id was passed
-      this.container = $('#' + options.container);
+      this.version = 0.0;
 
-    } else {
+      // toolbar's container
+      if (typeof options.container === 'string') {
 
-      // a DOM object was passed
-      this.container = $(options.container);
-    }
+        // a DOM id was passed
+        this.container = $('#' + options.container);
 
-    // toolbar's css position object with possible properties top, bottom, left, right
-    if (options.position) {
-      this.position = options.position;
-    } else {
-      this.position = {};
-    }
+      } else {
 
-    // associative array of button objects with the following properties:
-    //  -button: jquery object for the button element
-    //  -label: jquery object for a label element associated with the button
-    this.buttons = null;
-  };
+        // a DOM object was passed
+        this.container = $(options.container);
+      }
 
-  /**
-   * Initialize the tool bar.
-   */
-  toolbarjs.ToolBar.prototype.init = function() {
+      // toolbar's css position object with possible properties top, bottom, left, right
+      if (options.position) {
+        this.position = options.position;
+      } else {
+        this.position = {};
+      }
 
-    // add the appropriate classes
-    this.container.addClass('view-toolbar');
+      // associative array of button objects with the following properties:
+      //  -button: jquery object for the button element
+      //  -label: jquery object for a label element associated with the button
+      this.buttons = null;
+    };
 
-    // initialize array of buttons
-    this.buttons = {};
+    /**
+     * Initialize the tool bar.
+     */
+    toolbarjs.ToolBar.prototype.init = function() {
 
-    this.setPosition(this.position);
-  };
+      // add the appropriate classes
+      this.container.addClass('view-toolbar');
 
-  /**
-   * Set a new css position for the toolbar.
-   *
-   * @param {Object} css position object with possible properties: "top", "bottom", "left" and "right".
-   */
-  toolbarjs.ToolBar.prototype.setPosition = function(pos) {
+      // initialize array of buttons
+      this.buttons = {};
+
+      this.setPosition(this.position);
+    };
+
+    /**
+     * Set a new css position for the toolbar.
+     *
+     * @param {Object} css position object with possible properties: "top", "bottom", "left" and "right".
+     */
+    toolbarjs.ToolBar.prototype.setPosition = function(pos) {
        var container = this.container;
        var t = '', r = '', b = '', l = '';
 
@@ -103,45 +109,45 @@ define([], function() {
        }
      };
 
-  /**
-   * Add a new button to the tool bar.
-   *
-   * @param {Object} object containing button's properties: id string (required), title,
-   * caption, onclick, label.
-   */
-  toolbarjs.ToolBar.prototype.addButton = function(btnProps) {
+    /**
+     * Add a new button to the tool bar.
+     *
+     * @param {Object} object containing button's properties: id string (required), title,
+     * caption, onclick, label.
+     */
+    toolbarjs.ToolBar.prototype.addButton = function(btnProps) {
 
-    var btnObj = {};
+      var btnObj = {};
 
-    this.buttons[btnProps.id] = btnObj;
+      this.buttons[btnProps.id] = btnObj;
 
-    if ('label' in btnProps) {
+      if ('label' in btnProps) {
 
-      // append the button's label to the toolbar's DOM
-      btnObj.label = $('<span class="label">' + btnProps.label + '</span>');
-      this.container.append(btnObj.label);
-    }
+        // append the button's label to the toolbar's DOM
+        btnObj.label = $('<span class="label">' + btnProps.label + '</span>');
+        this.container.append(btnObj.label);
+      }
 
-    btnObj.button = $('<button class="view-toolbar-button" type="button" title="' +
-     btnProps.title + '">' + btnProps.caption + '</button>');
+      btnObj.button = $('<button class="view-toolbar-button" type="button" title="' +
+       btnProps.title + '">' + btnProps.caption + '</button>');
 
-    // append the new button to the toolbar's DOM
-    this.container.append(btnObj.button);
+      // append the new button to the toolbar's DOM
+      this.container.append(btnObj.button);
 
-    // set a click event handler if provided
-    if (btnProps.onclick) {
+      // set a click event handler if provided
+      if (btnProps.onclick) {
 
-      this.setButtonClickHandler(btnProps.id, btnProps.onclick);
-    }
-  };
+        this.setButtonClickHandler(btnProps.id, btnProps.onclick);
+      }
+    };
 
-  /**
-   * Set a click event handler for a button.
-   *
-   * @param {String} HTML DOM identifier of the button.
-   * @param {Function} event handler.
-   */
-  toolbarjs.ToolBar.prototype.setButtonClickHandler = function(btnId, handler) {
+    /**
+     * Set a click event handler for a button.
+     *
+     * @param {String} HTML DOM identifier of the button.
+     * @param {Function} event handler.
+     */
+    toolbarjs.ToolBar.prototype.setButtonClickHandler = function(btnId, handler) {
        var self = this;
 
        if (btnId && handler) {
@@ -161,91 +167,91 @@ define([], function() {
        }
      };
 
-  /**
-   * Get a button's object.
-   *
-   * @param {String} button's identifier.
-   * @return {Object} button object or null.
-   */
-  toolbarjs.ToolBar.prototype.getButton = function(btnId) {
+    /**
+     * Get a button's object.
+     *
+     * @param {String} button's identifier.
+     * @return {Object} button object or null.
+     */
+    toolbarjs.ToolBar.prototype.getButton = function(btnId) {
 
-    if (btnId in this.buttons) {
+      if (btnId in this.buttons) {
 
-      return this.buttons[btnId];
-    }
+        return this.buttons[btnId];
+      }
 
-    return null;
-  };
+      return null;
+    };
 
-  /**
-   * Hide a toolbar button.
-   *
-   * @param {String}  button's identifier.
-   */
-  toolbarjs.ToolBar.prototype.hideButton = function(btnId) {
+    /**
+     * Hide a toolbar button.
+     *
+     * @param {String}  button's identifier.
+     */
+    toolbarjs.ToolBar.prototype.hideButton = function(btnId) {
 
-    var btn = this.getButton(btnId);
+      var btn = this.getButton(btnId);
 
-    if (btn) {
+      if (btn) {
 
-      btn.button.css({display: 'none'});
-    }
-  };
+        btn.button.css({display: 'none'});
+      }
+    };
 
-  /**
-   * Show a toolbar button.
-   *
-   * @param {String} button's identifier.
-   */
-  toolbarjs.ToolBar.prototype.showButton = function(btnId) {
+    /**
+     * Show a toolbar button.
+     *
+     * @param {String} button's identifier.
+     */
+    toolbarjs.ToolBar.prototype.showButton = function(btnId) {
 
-    var btn = this.getButton(btnId);
+      var btn = this.getButton(btnId);
 
-    if (btn) {
+      if (btn) {
 
-      btn.button.css({display: ''});
-    }
-  };
+        btn.button.css({display: ''});
+      }
+    };
 
-  /**
-  * Disable a toolbar button.
-  *
-  * @param {String} button's identifier.
-  */
-  toolbarjs.ToolBar.prototype.disableButton = function(btnId) {
+    /**
+    * Disable a toolbar button.
+    *
+    * @param {String} button's identifier.
+    */
+    toolbarjs.ToolBar.prototype.disableButton = function(btnId) {
 
-    var btn = this.getButton(btnId);
+      var btn = this.getButton(btnId);
 
-    if (btn) {
+      if (btn) {
 
-      btn.button.addClass('disabled');
-    }
-  };
+        btn.button.addClass('disabled');
+      }
+    };
 
-  /**
-  * Enable a toolbar button.
-  *
-  * @param {String} button's identifier.
-  */
-  toolbarjs.ToolBar.prototype.enableButton = function(btnId) {
+    /**
+    * Enable a toolbar button.
+    *
+    * @param {String} button's identifier.
+    */
+    toolbarjs.ToolBar.prototype.enableButton = function(btnId) {
 
-    var btn = this.getButton(btnId);
+      var btn = this.getButton(btnId);
 
-    if (btn) {
+      if (btn) {
 
-      btn.button.removeClass('disabled');
-    }
-  };
+        btn.button.removeClass('disabled');
+      }
+    };
 
-  /**
-   * Remove event handlers and html interface.
-   */
-  toolbarjs.ToolBar.prototype.destroy = function() {
+    /**
+     * Remove event handlers and html interface.
+     */
+    toolbarjs.ToolBar.prototype.destroy = function() {
 
-    this.buttons = null;
-    this.container.empty();
-    this.container = null;
-  };
+      this.buttons = null;
+      this.container.empty();
+      this.container = null;
+    };
 
-  return toolbarjs;
-});
+    return toolbarjs;
+  });

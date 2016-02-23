@@ -3,7 +3,7 @@
  *
  */
 
-define(['toolbarjsPackage'], function(toolbarjs) {
+define(['toolbarjs'], function(toolbarjs) {
 
   describe('toolbarjs', function() {
     var toolBar;

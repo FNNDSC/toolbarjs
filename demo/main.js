@@ -1,6 +1,6 @@
 require(['./config'], function() {
 
-  require(['toolbarjsPackage'], function(toolbar) {
+  require(['toolbarjs'], function(toolbar) {
     // Entry point
 
     // toolbar options object

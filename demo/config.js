@@ -11,7 +11,7 @@ require.config({
   packages: [
 
     {
-      name: 'toolbarjsPackage', // used for mapping...
+      name: 'toolbarjs', // used for mapping...
       location: './', // relative to base url
       main: 'toolbarjs/src/js/toolbarjs'
     }

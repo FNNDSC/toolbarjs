@@ -157,6 +157,18 @@ module.exports = function(grunt) {
       }
     },
 
+    jsdoc: {
+      dist: {
+        src: ['src/**/*.js', 'README.md'],
+        options: {
+          destination: 'dist/doc',
+          template: 'node_modules/minami'
+          //template: 'node_modules/ink-docstrap/template',
+          //configure: 'node_modules/ink-docstrap/template/jsdoc.conf.json'
+        }
+      }
+    },
+
     clean: {
       all: ['dist']
     }
@@ -175,6 +187,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-browser-sync');
   grunt.loadNpmTasks('grunt-contrib-requirejs');
   grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-jsdoc');
 
   // Serve task.
   grunt.registerTask('serve', function(/*target*/) {
@@ -190,7 +203,7 @@ module.exports = function(grunt) {
   grunt.registerTask('test', ['jscs', 'jshint', 'copy:module', 'connect', 'jasmine']);
 
   // Build task.
-  grunt.registerTask('build', ['clean:all', 'cssmin', 'test', 'requirejs', 'copy']);
+  grunt.registerTask('build', ['clean:all', 'cssmin', 'test', 'requirejs', 'copy', 'jsdoc']);
 
   // Default task.
   grunt.registerTask('default', ['build']);

@@ -13,7 +13,7 @@ define(
     /**
      * Provide a namespace for the tool bar module
      *
-     * @namespace
+     * @namespace {object} toolbarjs
      */
     var toolbarjs = toolbarjs || {};
 
@@ -21,6 +21,7 @@ define(
      * Class implementing the tool bar
      *
      * @constructor
+     * @memberof toolbarjs
      * @param {Object} toolbar's options with properties:
      *   -container: toolbar's container's DOM id or DOM object
      *   -position: toolbar's css position object with possible properties top, bottom, left, right
@@ -56,6 +57,9 @@ define(
 
     /**
      * Initialize the tool bar.
+     *
+     * @alias init
+     * @memberof toolbarjs.ToolBar#
      */
     toolbarjs.ToolBar.prototype.init = function() {
 
@@ -71,6 +75,8 @@ define(
     /**
      * Set a new css position for the toolbar.
      *
+     * @alias setPosition
+     * @memberof toolbarjs.ToolBar#
      * @param {Object} css position object with possible properties: "top", "bottom", "left" and "right".
      */
     toolbarjs.ToolBar.prototype.setPosition = function(pos) {
@@ -112,6 +118,8 @@ define(
     /**
      * Add a new button to the tool bar.
      *
+     * @alias addButton
+     * @memberof toolbarjs.ToolBar#
      * @param {Object} object containing button's properties: id string (required), title,
      * caption, onclick, label.
      */
@@ -144,6 +152,8 @@ define(
     /**
      * Set a click event handler for a button.
      *
+     * @alias setButtonClickHandler
+     * @memberof toolbarjs.ToolBar#
      * @param {String} HTML DOM identifier of the button.
      * @param {Function} event handler.
      */
@@ -170,6 +180,8 @@ define(
     /**
      * Get a button's object.
      *
+     * @alias getButton
+     * @memberof toolbarjs.ToolBar#
      * @param {String} button's identifier.
      * @return {Object} button object or null.
      */
@@ -186,6 +198,8 @@ define(
     /**
      * Hide a toolbar button.
      *
+     * @alias hideButton
+     * @memberof toolbarjs.ToolBar#
      * @param {String}  button's identifier.
      */
     toolbarjs.ToolBar.prototype.hideButton = function(btnId) {
@@ -201,6 +215,8 @@ define(
     /**
      * Show a toolbar button.
      *
+     * @alias showButton
+     * @memberof toolbarjs.ToolBar#
      * @param {String} button's identifier.
      */
     toolbarjs.ToolBar.prototype.showButton = function(btnId) {
@@ -216,6 +232,8 @@ define(
     /**
     * Disable a toolbar button.
     *
+    * @alias disableButton
+    * @memberof toolbarjs.ToolBar#
     * @param {String} button's identifier.
     */
     toolbarjs.ToolBar.prototype.disableButton = function(btnId) {
@@ -231,6 +249,8 @@ define(
     /**
     * Enable a toolbar button.
     *
+    * @alias enableButton
+    * @memberof toolbarjs.ToolBar#
     * @param {String} button's identifier.
     */
     toolbarjs.ToolBar.prototype.enableButton = function(btnId) {
@@ -245,6 +265,9 @@ define(
 
     /**
      * Remove event handlers and html interface.
+     *
+     * @alias destroy
+     * @memberof toolbarjs.ToolBar#
      */
     toolbarjs.ToolBar.prototype.destroy = function() {
 

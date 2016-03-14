@@ -1,2 +1,0 @@
-# toolbarjs
-A toolbar object.

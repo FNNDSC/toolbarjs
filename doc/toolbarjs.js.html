@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>toolbarjs.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="toolbarjs.ToolBar.html">ToolBar</a><ul class='methods'><li data-type='method'><a href="toolbarjs.ToolBar.html#addButton">addButton</a></li><li data-type='method'><a href="toolbarjs.ToolBar.html#destroy">destroy</a></li><li data-type='method'><a href="toolbarjs.ToolBar.html#disableButton">disableButton</a></li><li data-type='method'><a href="toolbarjs.ToolBar.html#enableButton">enableButton</a></li><li data-type='method'><a href="toolbarjs.ToolBar.html#getButton">getButton</a></li><li data-type='method'><a href="toolbarjs.ToolBar.html#hideButton">hideButton</a></li><li data-type='method'><a href="toolbarjs.ToolBar.html#init">init</a></li><li data-type='method'><a href="toolbarjs.ToolBar.html#setButtonClickHandler">setButtonClickHandler</a></li><li data-type='method'><a href="toolbarjs.ToolBar.html#setPosition">setPosition</a></li><li data-type='method'><a href="toolbarjs.ToolBar.html#showButton">showButton</a></li></ul></li></ul><h3>Namespaces</h3><ul><li><a href="toolbarjs.html">toolbarjs</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">toolbarjs.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * This module implements a tool bar
+ */
+// define a new module
+define(
+  [
+
+  // jquery is special because it is AMD but doesn't return an object
+  'jquery_ui'
+
+  ], function() {
+
+    /**
+     * Provide a namespace for the tool bar module
+     *
+     * @namespace {object} toolbarjs
+     */
+    var toolbarjs = toolbarjs || {};
+
+    /**
+     * Class implementing the tool bar
+     *
+     * @constructor
+     * @memberof toolbarjs
+     * @param {Object} toolbar's options with properties:
+     *   -container: toolbar's container's DOM id or DOM object
+     *   -position: toolbar's css position object with possible properties top, bottom, left, right
+     */
+    toolbarjs.ToolBar = function(options) {
+
+      this.version = 0.0;
+
+      // toolbar's container
+      if (typeof options.container === 'string') {
+
+        // a DOM id was passed
+        this.container = $('#' + options.container);
+
+      } else {
+
+        // a DOM object was passed
+        this.container = $(options.container);
+      }
+
+      // toolbar's css position object with possible properties top, bottom, left, right
+      if (options.position) {
+        this.position = options.position;
+      } else {
+        this.position = {};
+      }
+
+      // associative array of button objects with the following properties:
+      //  -button: jquery object for the button element
+      //  -label: jquery object for a label element associated with the button
+      this.buttons = null;
+    };
+
+    /**
+     * Initialize the tool bar.
+     *
+     * @alias init
+     * @memberof toolbarjs.ToolBar#
+     */
+    toolbarjs.ToolBar.prototype.init = function() {
+
+      // add the appropriate classes
+      this.container.addClass('view-toolbar');
+
+      // initialize array of buttons
+      this.buttons = {};
+
+      this.setPosition(this.position);
+    };
+
+    /**
+     * Set a new css position for the toolbar.
+     *
+     * @alias setPosition
+     * @memberof toolbarjs.ToolBar#
+     * @param {Object} css position object with possible properties: "top", "bottom", "left" and "right".
+     */
+    toolbarjs.ToolBar.prototype.setPosition = function(pos) {
+       var container = this.container;
+       var t = '', r = '', b = '', l = '';
+
+       if (pos) {
+
+         if (pos.top) {
+           this.position.top = pos.top;
+           container.css({top: pos.top});
+           t = ' - ' + pos.top;
+         }
+
+         if (pos.right) {
+           this.position.right = pos.right;
+           container.css({right: pos.right});
+           r = ' - ' + pos.right;
+         }
+
+         if (pos.bottom) {
+           this.position.bottom = pos.bottom;
+           container.css({bottom: pos.bottom});
+           b = ' - ' + pos.bottom;
+         }
+
+         if (pos.left) {
+           this.position.left = pos.left;
+           container.css({left: pos.left});
+           l = ' - ' + pos.left;
+         }
+
+         if (r || l) {
+           container.css({width: 'calc(100%' + r + l + ')'});
+         }
+       }
+     };
+
+    /**
+     * Add a new button to the tool bar.
+     *
+     * @alias addButton
+     * @memberof toolbarjs.ToolBar#
+     * @param {Object} object containing button's properties: id string (required), title,
+     * caption, onclick, label.
+     */
+    toolbarjs.ToolBar.prototype.addButton = function(btnProps) {
+
+      var btnObj = {};
+
+      this.buttons[btnProps.id] = btnObj;
+
+      if ('label' in btnProps) {
+
+        // append the button's label to the toolbar's DOM
+        btnObj.label = $('&lt;span class="label">' + btnProps.label + '&lt;/span>');
+        this.container.append(btnObj.label);
+      }
+
+      btnObj.button = $('&lt;button class="view-toolbar-button" type="button" title="' +
+       btnProps.title + '">' + btnProps.caption + '&lt;/button>');
+
+      // append the new button to the toolbar's DOM
+      this.container.append(btnObj.button);
+
+      // set a click event handler if provided
+      if (btnProps.onclick) {
+
+        this.setButtonClickHandler(btnProps.id, btnProps.onclick);
+      }
+    };
+
+    /**
+     * Set a click event handler for a button.
+     *
+     * @alias setButtonClickHandler
+     * @memberof toolbarjs.ToolBar#
+     * @param {String} HTML DOM identifier of the button.
+     * @param {Function} event handler.
+     */
+    toolbarjs.ToolBar.prototype.setButtonClickHandler = function(btnId, handler) {
+       var self = this;
+
+       if (btnId &amp;&amp; handler) {
+
+         var btn = self.getButton(btnId);
+
+         if (btn) {
+
+           btn.button.click(function() {
+
+             if (!$(this).hasClass('disabled')) {
+
+               handler.apply(this);
+             }
+           });
+         }
+       }
+     };
+
+    /**
+     * Get a button's object.
+     *
+     * @alias getButton
+     * @memberof toolbarjs.ToolBar#
+     * @param {String} button's identifier.
+     * @return {Object} button object or null.
+     */
+    toolbarjs.ToolBar.prototype.getButton = function(btnId) {
+
+      if (btnId in this.buttons) {
+
+        return this.buttons[btnId];
+      }
+
+      return null;
+    };
+
+    /**
+     * Hide a toolbar button.
+     *
+     * @alias hideButton
+     * @memberof toolbarjs.ToolBar#
+     * @param {String}  button's identifier.
+     */
+    toolbarjs.ToolBar.prototype.hideButton = function(btnId) {
+
+      var btn = this.getButton(btnId);
+
+      if (btn) {
+
+        btn.button.css({display: 'none'});
+      }
+    };
+
+    /**
+     * Show a toolbar button.
+     *
+     * @alias showButton
+     * @memberof toolbarjs.ToolBar#
+     * @param {String} button's identifier.
+     */
+    toolbarjs.ToolBar.prototype.showButton = function(btnId) {
+
+      var btn = this.getButton(btnId);
+
+      if (btn) {
+
+        btn.button.css({display: ''});
+      }
+    };
+
+    /**
+    * Disable a toolbar button.
+    *
+    * @alias disableButton
+    * @memberof toolbarjs.ToolBar#
+    * @param {String} button's identifier.
+    */
+    toolbarjs.ToolBar.prototype.disableButton = function(btnId) {
+
+      var btn = this.getButton(btnId);
+
+      if (btn) {
+
+        btn.button.addClass('disabled');
+      }
+    };
+
+    /**
+    * Enable a toolbar button.
+    *
+    * @alias enableButton
+    * @memberof toolbarjs.ToolBar#
+    * @param {String} button's identifier.
+    */
+    toolbarjs.ToolBar.prototype.enableButton = function(btnId) {
+
+      var btn = this.getButton(btnId);
+
+      if (btn) {
+
+        btn.button.removeClass('disabled');
+      }
+    };
+
+    /**
+     * Remove event handlers and html interface.
+     *
+     * @alias destroy
+     * @memberof toolbarjs.ToolBar#
+     */
+    toolbarjs.ToolBar.prototype.destroy = function() {
+
+      this.buttons = null;
+      this.container.empty();
+      this.container = null;
+    };
+
+    return toolbarjs;
+  });
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon Mar 14 2016 09:46:37 GMT+0100 (CET) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>
